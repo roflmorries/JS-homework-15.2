@@ -91,13 +91,13 @@ body {
     
 }
 
-.sumbit_button {
+.submit_button {
     width: 300px;
     height: 30px;
     border-radius: 10px;
     border: #4cd964;
 }
-.sumbit_button:hover {
+.submit_button:hover {
     background-color: #4cd964;
     transition: 0.3s;
     color: white;
