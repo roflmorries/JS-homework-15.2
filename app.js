@@ -1,17 +1,19 @@
-document.getElementById('registrationForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const getValue = id => document.getElementById(id).value.trim() || 'Ничего не выбрано!';
-    const getChekedValue = name => document.querySelector(`input[name="${name}"]:checked`)?.value || 'Ничего не выбрано!';
-    const getCheckedValues = name => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`), cb => cb.value).join(', ') || 'Ничего не выбрано!';
+document.querySelector('.submit_button').addEventListener('click', () => {
+    event.preventDefault()
+    const client = {
+        firstName: document.forms.registrationForm.firstName.value,
+        lastName: document.forms.registrationForm.lastName.value,
+        birthDate: document.forms.registrationForm.birthDate.value,
+        adress: document.forms.registrationForm.adress.value,
+        gender: document.forms.registrationForm.gender.value,
+        city: document.forms.registrationForm.city.value,
+        language: document.forms.registrationForm.language,
+      }
 
-
-    const firstName = getValue('firstName');
-    const lastName = getValue('lastName');
-    const bday = getValue('birthDate');
-    const gender = getChekedValue('gender');
-    const city = getValue('city');
-    const adress = getValue('adress');
-    const language = getCheckedValues('language');
+    const clientLanguage = client.language
+    const selectedValues = [...client.language]
+        .filter(clientLanguage => clientLanguage.checked)
+        .map(clientLanguage => clientLanguage.value).join(", ");
 
 
     const validationName = /^[A-ZА-Я][a-zа-я]{1,}$/;
@@ -19,9 +21,10 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     const validationDate = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
     const registrationForm = document.getElementById('registrationForm');
 
-    if (!validationName.test(firstName) || !validationName.test(lastName) || !validationAdress.test(adress)) {
-        const notification = document.getElementById('notification');
 
+    if (!validationName.test(client.firstName) || !validationName.test(client.lastName) || !validationAdress.test(client.adress)) {
+        const notification = document.getElementById('notification');
+        console.log(client)
         registrationForm.classList.add('invalid');
         notification.innerHTML = `
         <p>Строки ввода могут содержать только Ру/Eng буквы и символы</p>
@@ -35,7 +38,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
     }
 
-    if (!validationDate.test(bday)) {
+    if (!validationDate.test(client.birthDate)) {
         console.log(bday)
         const notification = document.getElementById('notification');
 
@@ -50,13 +53,13 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
 
     document.getElementById('results').innerHTML = `
-    <p>Имя: ${firstName}</p>
-    <p>Фамилия: ${lastName}</p>
-    <p>Дата рождения: ${bday}</p>
-    <p>Пол: ${gender}</p>
-    <p>Город: ${city}</p>
-    <p>Адрес: ${adress}</p>
-    <p>Язык: ${language}</p>
+    <p>Имя: ${client.firstName}</p>
+    <p>Фамилия: ${client.lastName}</p>
+    <p>Дата рождения: ${client.birthDate}</p>
+    <p>Пол: ${client.gender}</p>
+    <p>Город: ${client.city}</p>
+    <p>Адрес: ${client.adress}</p>
+    <p>Язык: ${selectedValues}</p>
     `;
 
     document.getElementById('registrationForm').classList.add('hidden');
